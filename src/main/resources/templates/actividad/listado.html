@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="layout/base :: head"></head>
+    <body>
+
+        <header th:replace="layout/base :: header"></header>
+
+        <section class="container my-4">
+            <h1 th:text="${tituloPagina}">Actividad de usuarios</h1>
+
+            <form method="get" class="row g-3 mt-2">
+                <div class="col-md-4">
+                    <label class="form-label" for="usuarioId">Filtrar por usuario</label>
+                    <select class="form-select" id="usuarioId" name="usuarioId">
+                        <option value=""
+                                th:selected="${usuarioId == null}">
+                            Todos
+                        </option>
+                        <option th:each="u : ${usuarios}"
+                                th:value="${u.id}"
+                                th:selected="${usuarioId != null and usuarioId == u.id}"
+                                th:text="${u.email}">
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    <button class="btn btn-primary w-100" type="submit">Aplicar</button>
+                </div>
+            </form>
+
+            <div th:if="${#lists.isEmpty(actividad)}" class="alert alert-info mt-3">
+                No hay registros de actividad.
+            </div>
+
+            <div th:if="${!#lists.isEmpty(actividad)}" class="table-responsive mt-3">
+                <table class="table table-striped align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Tipo</th>
+                            <th>Descripción</th>
+                            <th>Fecha / hora</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="a : ${actividad}">
+                            <td th:text="${a.usuario.email}">email</td>
+                            <td th:text="${a.tipo}">LOGIN</td>
+                            <td th:text="${a.descripcion}">Detalle</td>
+                            <td th:text="${a.fechaHora}">2025-12-03T20:00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <footer th:replace="layout/base :: footer"></footer>
+
+    </body>
+</html>

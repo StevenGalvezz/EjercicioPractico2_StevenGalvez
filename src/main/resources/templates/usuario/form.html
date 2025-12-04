@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="layout/base :: head"></head>
+    <body>
+
+        <header th:replace="layout/base :: header"></header>
+
+        <section class="container my-4" style="max-width: 600px;">
+            <h1 th:text="${tituloPagina}">Usuario</h1>
+
+            <form th:action="@{/admin/usuarios/guardar}" method="post" class="mt-3"
+                  th:object="${usuario}">
+                <input type="hidden" th:field="*{id}"/>
+
+                <div class="mb-3">
+                    <label class="form-label" for="nombre">Nombre</label>
+                    <input class="form-control" id="nombre" type="text"
+                           th:field="*{nombre}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="apellido">Apellido</label>
+                    <input class="form-control" id="apellido" type="text"
+                           th:field="*{apellido}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="email">Email</label>
+                    <input class="form-control" id="email" type="email"
+                           th:field="*{email}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="rolId">Rol</label>
+                    <select class="form-select" id="rolId" name="rolId" required>
+                        <option value="">-- Seleccione --</option>
+                        <option th:each="r : ${roles}"
+                                th:value="${r.id}"
+                                th:selected="${usuario.rol != null and usuario.rol.id == r.id}"
+                                th:text="${r.nombre}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="passwordPlano">Contraseña</label>
+                    <input class="form-control" id="passwordPlano" type="password"
+                           name="passwordPlano"
+                           th:placeholder="${usuario.id == null} ? 'Obligatoria' : 'Dejar en blanco para no cambiar'">
+                </div>
+
+                <div class="form-check mb-3">
+                    <input class="form-check-input" id="activo" type="checkbox"
+                           th:field="*{activo}">
+                        <label class="form-check-label" for="activo">Usuario activo</label>
+                </div>
+
+                <button class="btn btn-primary" type="submit">Guardar</button>
+                <a class="btn btn-secondary" th:href="@{/admin/usuarios}">Cancelar</a>
+            </form>
+        </section>
+
+        <footer th:replace="layout/base :: footer"></footer>
+
+    </body>
+</html>

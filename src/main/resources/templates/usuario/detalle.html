@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/base :: head"></head>
+<body>
+<header th:replace="layout/base :: header"></header>
+
+<section class="container my-4" style="max-width: 600px;">
+    <h1 th:text="${tituloPagina}">Detalle de usuario</h1>
+
+    <div class="card mt-3">
+        <div class="card-body">
+            <p><strong>Nombre:</strong> <span th:text="${usuario.nombre + ' ' + usuario.apellido}"></span></p>
+            <p><strong>Email:</strong> <span th:text="${usuario.email}"></span></p>
+            <p><strong>Rol:</strong> <span th:text="${usuario.rol.nombre}"></span></p>
+            <p><strong>Activo:</strong> <span th:text="${usuario.activo} ? 'Sí' : 'No'"></span></p>
+            <p><strong>Fecha creación:</strong> <span th:text="${usuario.fechaCreacion}"></span></p>
+        </div>
+    </div>
+
+    <a class="btn btn-secondary mt-3" th:href="@{/admin/usuarios}">Volver</a>
+</section>
+
+<footer th:replace="layout/base :: footer"></footer>
+</body>
+</html>

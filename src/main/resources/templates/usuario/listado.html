@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="layout/base :: head"></head>
+    <body>
+
+        <header th:replace="layout/base :: header"></header>
+
+        <section class="container my-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h1 th:text="${tituloPagina}">Usuarios</h1>
+                <a class="btn btn-primary" th:href="@{/admin/usuarios/nuevo}">
+                    <i class="fa fa-plus"></i> Nuevo usuario
+                </a>
+            </div>
+
+            <div th:if="${#lists.isEmpty(usuarios)}" class="alert alert-info">
+                No hay usuarios registrados.
+            </div>
+
+            <div th:if="${!#lists.isEmpty(usuarios)}" class="table-responsive">
+                <table class="table table-striped align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Rol</th>
+                            <th>Activo</th>
+                            <th style="width: 160px;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="u : ${usuarios}">
+                            <td th:text="${u.nombre + ' ' + u.apellido}">Nombre</td>
+                            <td th:text="${u.email}">correo</td>
+                            <td th:text="${u.rol.nombre}">ADMIN</td>
+                            <td>
+                                <span th:text="${u.activo} ? 'Sí' : 'No'">Sí</span>
+                            </td>
+                            <td class="text-end">
+                                <a class="btn btn-sm btn-info"
+                                   th:href="@{'/admin/usuarios/detalle/' + ${u.id}}">
+                                    Ver
+                                </a>
+                                <a class="btn btn-sm btn-warning"
+                                   th:href="@{'/admin/usuarios/editar/' + ${u.id}}">
+                                    Editar
+                                </a>
+                                <a class="btn btn-sm btn-danger"
+                                   th:href="@{'/admin/usuarios/eliminar/' + ${u.id}}"
+                                   onclick="return confirm('¿Eliminar usuario?');">
+                                    Eliminar
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <footer th:replace="layout/base :: footer"></footer>
+
+    </body>
+</html>
