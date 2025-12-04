@@ -14,7 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -77,6 +77,12 @@ public class AdminUsuarioController {
         } else if (esNuevo) {
             throw new RuntimeException("La contraseña es obligatoria para nuevos usuarios");
         }
+
+        if (esNuevo) {
+            usuario.setFechaCreacion(LocalDateTime.now());
+        }
+
+        usuarioService.guardar(usuario);
 
         Usuario guardado = usuarioService.guardar(usuario);
 
