@@ -3,13 +3,102 @@
 Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
 Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
 -->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="layout/base :: head"></head>
     <body>
-        <div>TODO write content</div>
+
+        <header th:replace="layout/base :: header"></header>
+
+        <section class="container my-4">
+            <h1 th:text="${tituloPagina}">Consultas avanzadas de usuarios</h1>
+
+            <!-- Filtro por rol -->
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Buscar por rol</h5>
+                    <form th:action="@{/admin/usuarios/consultas}" method="get" class="row g-2">
+                        <div class="col-md-4">
+                            <select class="form-select" name="rol">
+                                <option value="" th:selected="${rol == null}">Todos</option>
+                                <option value="ADMIN" th:selected="${rol == 'ADMIN'}">ADMIN</option>
+                                <option value="PROFESOR" th:selected="${rol == 'PROFESOR'}">PROFESOR</option>
+                                <option value="ESTUDIANTE" th:selected="${rol == 'ESTUDIANTE'}">ESTUDIANTE</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-primary w-100" type="submit">Filtrar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Filtro por rango de fechas -->
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Buscar por rango de fechas</h5>
+                    <form th:action="@{/admin/usuarios/consultas}" method="get" class="row g-2">
+                        <div class="col-md-4">
+                            <label class="form-label">Desde</label>
+                            <input class="form-control" type="datetime-local" name="desde">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Hasta</label>
+                            <input class="form-control" type="datetime-local" name="hasta">
+                        </div>
+                        <div class="col-md-2 d-flex align-items-end">
+                            <button class="btn btn-primary w-100" type="submit">Buscar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Búsqueda por texto -->
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Buscar por correo o nombre</h5>
+                    <form th:action="@{/admin/usuarios/consultas}" method="get" class="row g-2">
+                        <div class="col-md-6">
+                            <input class="form-control" type="text" name="texto"
+                                   th:value="${texto}" placeholder="Parte del correo o nombre">
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-primary w-100" type="submit">Buscar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Resultado -->
+            <div th:if="${!#lists.isEmpty(resultado)}" class="table-responsive mt-3">
+                <table class="table table-striped align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Rol</th>
+                            <th>Activo</th>
+                            <th>Fecha creación</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="u : ${resultado}">
+                            <td th:text="${u.nombre + ' ' + u.apellido}">Nombre</td>
+                            <td th:text="${u.email}">correo</td>
+                            <td th:text="${u.rol.nombre}">ROL</td>
+                            <td th:text="${u.activo} ? 'Sí' : 'No'">Sí</td>
+                            <td th:text="${u.fechaCreacion}">2025-12-03T10:00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div th:if="${#lists.isEmpty(resultado)}" class="alert alert-info mt-3">
+                No hay resultados para los filtros aplicados.
+            </div>
+        </section>
+
+        <footer th:replace="layout/base :: footer"></footer>
+
     </body>
 </html>

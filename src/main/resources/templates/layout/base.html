@@ -37,6 +37,19 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             <li class="nav-item" sec:authorize="hasRole('ADMIN')">
                                 <a class="nav-link" th:href="@{/admin/actividad}">Actividad</a>
                             </li>
+                            <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                                <a class="nav-link" th:href="@{/admin/usuarios/consultas}">Consultas usuarios</a>
+                            </li>
+                            <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                                <a class="nav-link" th:href="@{/admin/roles}">Roles</a>
+                            </li>
+
+                            <li class="nav-item" sec:authorize="hasRole('PROFESOR')">
+                                <a class="nav-link" th:href="@{/profesor/reportes}">Reportes</a>
+                            </li>
+                            <li class="nav-item" sec:authorize="hasRole('ESTUDIANTE')">
+                                <a class="nav-link" th:href="@{/estudiante/perfil}">Mi perfil</a>
+                            </li>
 
                             <li class="nav-item" sec:authorize="isAnonymous()">
                                 <a class="nav-link" th:href="@{/login}">Ingresar</a>
@@ -47,15 +60,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                         Salir
                                     </button>
                                 </form>
-                            </li>
-                            <li class="nav-item" sec:authorize="hasRole('ADMIN')">
-                                <a class="nav-link" th:href="@{/admin/roles}">Roles</a>
-                            </li>
-                            <li class="nav-item" sec:authorize="hasRole('PROFESOR')">
-                                <a class="nav-link" th:href="@{/profesor/reportes}">Reportes</a>
-                            </li>
-                            <li class="nav-item" sec:authorize="hasRole('ESTUDIANTE')">
-                                <a class="nav-link" th:href="@{/estudiante/perfil}">Mi perfil</a>
                             </li>
                         </ul>
                     </div>
